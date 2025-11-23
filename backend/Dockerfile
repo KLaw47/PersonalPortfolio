@@ -1,6 +1,6 @@
 FROM python:3.12-slim
 
-# Prevent python from writing .pyc files and using buffered stdout/stderr
+# Prevent python from writing .pyc files and using buffered stdout/stderr. prints logs straight to the console.
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
