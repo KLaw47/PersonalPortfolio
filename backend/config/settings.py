@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'api'
 ]
 
 MIDDLEWARE = [
@@ -79,7 +80,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.environ.get("POSTGRES_DB", "portfolio_db"),
         'USER': os.environ.get("POSTGRES_USER", "portfolio_user"),
-        'PASSWORD': os.environ.get("POSTGRES_PASSWORD", "password"),
+        'PASSWORD': os.environ.get("POSTGRES_PASSWORD", "devpassword47"),
         'HOST': os.environ.get("POSTGRES_HOST", "db"), # the service name in docker-compose
         'PORT': os.environ.get("POSTGRES_PORT", "5432"),
     }
