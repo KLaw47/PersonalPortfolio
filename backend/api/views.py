@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from .models import BlogPost, Project
 from .serializers import BlogPostSerializer, ProjectSerializer
-from rest_framework import viewsets, permissions
+from rest_framework import viewsets, permissions, decorators
+from rest_framework.decorators import action
+from rest_framework.response import Response
 
 class IsAdminOrReadOnly(permissions.BasePermission):
     def has_permission(self, request, view):
@@ -12,8 +14,16 @@ class IsAdminOrReadOnly(permissions.BasePermission):
 
 class BlogPostViewSet(viewsets.ModelViewSet):
     queryset = BlogPost.objects.all()
-    serializer_class = BlogPostSerializer #todo, make serializers
+    serializer_class = BlogPostSerializer 
     permission_classes = [IsAdminOrReadOnly]
+
+    @action(detail=False, methods=['get'])
+    def latest(self, request):
+        post = self.queryset.filter(status='published').order_by('-published_at').first()
+        # We filter the queryset that we set on line 16. filter is an sql where clause. order_by is an sql order by. the minus sign denotes Descending.
+        # dot first gets the first one of this set.
+        serializer = self.get_serializer(post)
+        return Response(serializer.data)
 
 class ProjectViewSet(viewsets.ModelViewSet):
     queryset = Project.objects.all()
